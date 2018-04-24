@@ -9,15 +9,15 @@ GAME RULES:
 
 */
 
-var scores, rollScore, activePlayer, gamePlaying;
+var scores, rollScore, activePlayer, gamePlaying, previousRoll;
 
 initGame();
+previousRoll = 0;
 
 document.querySelector('.btn-roll').addEventListener('click', function(){
-
     if(gamePlaying){
-
         //1. need random number
+
         var dice = Math.floor(Math.random() * 6) + 1;
 
         //2. display the result
@@ -26,17 +26,52 @@ document.querySelector('.btn-roll').addEventListener('click', function(){
         diceDOM.src = 'dice-'+ dice + '.png';
 
         //3. update the round IF the rolled number is NOT a one.
-        if(dice !==1){
-            rollScore += dice;
-            document.querySelector('#current-' + activePlayer).textContent = rollScore;
-        }else{
-            setTimeout(function() { alert("Oh no! You rolled a one. Your score is now zero and it\'s the next player\'s turn."); }, 100);
-            // alert('Oh no! You rolled a one. Your score is now zero and it\'s the next player\'s turn.');
+        //added challenge to reset score if a six is rolled twice in a row.
+
+        if(previousRoll === 6 && dice === 6){
+            rollScore = 0;
+            document.querySelector('#current-' + activePlayer).textContent = 0;
+            scores[activePlayer] = 0;
+            document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+
+            alert('DOUBLE SIXES! Aw that sucks, start over.')
+
             nextPlayer();
+        }else if(dice !==1){
+            rollScore += dice;
+
+            document.querySelector('#current-' + activePlayer).textContent = rollScore;
+            }else if (dice === 1){
+                setTimeout(function() { alert("Oh no! You rolled a one. Your score is now zero and it\'s the next player\'s turn."); }, 100);
+                nextPlayer();
         }
+
+        previousRoll = dice;
+
+
+
+        // ------------
+        // if(dice !==1){
+        //     rollScore += dice;
+        //     previousRoll += dice;
+        //
+        //     document.querySelector('#current-' + activePlayer).textContent = rollScore;
+        // // }else if (dice === 1){
+        // //     setTimeout(function() { alert("Oh no! You rolled a one. Your score is now zero and it\'s the next player\'s turn."); }, 100);
+        // //     nextPlayer();
+        //
+        // }else if(previousRoll === 6 && dice === 6){
+        //     rollScore = 0;
+        //     document.querySelector('#current-' + activePlayer).textContent = 0;
+        //     scores[activePlayer] = 0;
+        //     alert('Aw that sucks, start over.')
+        //
+        //     nextPlayer();
+        // }
+        // ------------
+
     }
 });
-
 
 document.querySelector('.btn-hold').addEventListener('click',function(){
     if(gamePlaying){
@@ -100,11 +135,16 @@ function initGame(){
 
 
 //additional challenges
-//1 - Player loses entire score & nextPlayer is called if player rolls 2 6s in a row. - Save the previous dice roll in a seperate var
+//1 - Player loses entire score & nextPlayer is called if player rolls 2 6s in a row. - Save the previous dice roll in a separate var
+    //in order to know if player rolled to 6s in a row, would need to hold the last roll value in a variable and compare it to the current roll.
+    //then write an if statement if the current roll is equal to six && prev roll ==6, then reset all scores and call next player .
 
 //2- Add an input filed to the HTML where Players can set the winning score, so they can change the winning score. .vlaue property
+    //add input filed somewhere on page or use prompt asking for total score.
+    // set that value to be a var. change in above code
 
-//3-Add another dice ot the gme so that there ar 2. the player still loses it's currnet score if one of them is a 1. use css to position the second dice.
+//3-Add another dice ot the game so that there ar 2. the player still loses it's currnet score if one of them is a 1. use css to position the second dice.
+    //can i change dice to be a function to call? if not, add another die using the code and position on page
 
 
 
