@@ -9,13 +9,19 @@ GAME RULES:
 
 */
 
-var scores, rollScore, activePlayer, gamePlaying, previousRoll;
+var scores, rollScore, activePlayer, gamePlaying, previousRoll, totalWinningScore;
 
 initGame();
 previousRoll = 0;
 
 document.querySelector('.btn-roll').addEventListener('click', function(){
     if(gamePlaying){
+
+        //get user entered number for total winning score
+        totalWinningScore = document.getElementById('winningScore').value;
+        console.log(totalWinningScore);
+
+
         //1. need random number
 
         var dice = Math.floor(Math.random() * 6) + 1;
@@ -82,7 +88,8 @@ document.querySelector('.btn-hold').addEventListener('click',function(){
         document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
 
         //check if the current player won the game
-        if(scores[activePlayer] >= 100){
+
+        if(scores[activePlayer] >= totalWinningScore){
             gamePlaying = false;
 
             document.querySelector('#name-'+activePlayer).textContent = 'Winner!';
@@ -139,11 +146,11 @@ function initGame(){
     //in order to know if player rolled to 6s in a row, would need to hold the last roll value in a variable and compare it to the current roll.
     //then write an if statement if the current roll is equal to six && prev roll ==6, then reset all scores and call next player .
 
-//2- Add an input filed to the HTML where Players can set the winning score, so they can change the winning score. .vlaue property
+//2- Add an input field to the HTML where Players can set the winning score, so they can change the winning score. .value property
     //add input filed somewhere on page or use prompt asking for total score.
     // set that value to be a var. change in above code
 
-//3-Add another dice ot the game so that there ar 2. the player still loses it's currnet score if one of them is a 1. use css to position the second dice.
+//3-Add another dice ot the game so that there ar 2. the player still loses it's current score if one of them is a 1. use css to position the second dice.
     //can i change dice to be a function to call? if not, add another die using the code and position on page
 
 

@@ -46,6 +46,27 @@ body {
 }
 
 
+#winningScore{
+    top: 537px;
+    position: absolute;
+    left: 45%;
+    right: 45%;
+    padding: 5px 14px;
+    font-size: 2em;
+    color: #878787;
+}
+
+#winningScoreText{
+    top: 510px;
+    position: absolute;
+    left: 41%;
+    right: 35%;
+    font-size: 1.1em;
+    color: #555555;
+    background: none;
+    border: none;
+    text-transform: uppercase;
+}
 
 /**********************************************
 *** PLAYERS
@@ -139,7 +160,7 @@ i {
 
 .btn-new { top: 45px;}
 .btn-roll { top: 403px;}
-.btn-hold { top: 467px;}
+.btn-hold { top: 460px;}
 
 .dice {
     position: absolute;
