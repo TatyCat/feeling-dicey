@@ -16,14 +16,19 @@ previousRoll = 0;
 
 document.querySelector('.btn-roll').addEventListener('click', function(){
     if(gamePlaying){
+        //remove ability to change final score
+        if(confirmScore){
+            confirmScore = false;
 
-        //get user entered number for total winning score
-        totalWinningScore = document.getElementById('winningScore').value;
-        console.log(totalWinningScore);
+            //get user entered number for total winning score
+            totalWinningScore = document.getElementById('winningScore').value;
 
+            //replace input box with the user chosen total winning score.
+            document.getElementById('userChosenWinningScore').innerHTML = '<p id="chosenWinningScore">'+totalWinningScore+'</p>' ;
+
+        }
 
         //1. need random number
-
         var dice = Math.floor(Math.random() * 6) + 1;
 
         //2. display the result
@@ -33,50 +38,44 @@ document.querySelector('.btn-roll').addEventListener('click', function(){
 
         //3. update the round IF the rolled number is NOT a one.
         //added challenge to reset score if a six is rolled twice in a row.
-
         if(previousRoll === 6 && dice === 6){
             rollScore = 0;
             document.querySelector('#current-' + activePlayer).textContent = 0;
             scores[activePlayer] = 0;
             document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
-
-            alert('DOUBLE SIXES! Aw that sucks, start over.')
-
+            alert('DOUBLE SIXES! Aw that sucks, start over.');
             nextPlayer();
+
         }else if(dice !==1){
             rollScore += dice;
-
             document.querySelector('#current-' + activePlayer).textContent = rollScore;
-            }else if (dice === 1){
-                setTimeout(function() { alert("Oh no! You rolled a one. Your score is now zero and it\'s the next player\'s turn."); }, 100);
-                nextPlayer();
+
+        }else if (dice === 1){
+            setTimeout(function() { alert("Oh no! You rolled a one. Your score is now zero and it\'s the next player\'s turn."); }, 100);
+            nextPlayer();
         }
 
         previousRoll = dice;
-
-
-
-        // ------------
-        // if(dice !==1){
-        //     rollScore += dice;
-        //     previousRoll += dice;
-        //
-        //     document.querySelector('#current-' + activePlayer).textContent = rollScore;
-        // // }else if (dice === 1){
-        // //     setTimeout(function() { alert("Oh no! You rolled a one. Your score is now zero and it\'s the next player\'s turn."); }, 100);
-        // //     nextPlayer();
-        //
-        // }else if(previousRoll === 6 && dice === 6){
-        //     rollScore = 0;
-        //     document.querySelector('#current-' + activePlayer).textContent = 0;
-        //     scores[activePlayer] = 0;
-        //     alert('Aw that sucks, start over.')
-        //
-        //     nextPlayer();
-        // }
-        // ------------
-
     }
+    // ------------
+    // if(dice !==1){
+    //     rollScore += dice;
+    //     previousRoll += dice;
+    //
+    //     document.querySelector('#current-' + activePlayer).textContent = rollScore;
+    // // }else if (dice === 1){
+    // //     setTimeout(function() { alert("Oh no! You rolled a one. Your score is now zero and it\'s the next player\'s turn."); }, 100);
+    // //     nextPlayer();
+    //
+    // }else if(previousRoll === 6 && dice === 6){
+    //     rollScore = 0;
+    //     document.querySelector('#current-' + activePlayer).textContent = 0;
+    //     scores[activePlayer] = 0;
+    //     alert('Aw that sucks, start over.')
+    //
+    //     nextPlayer();
+    // }
+    // ------------
 });
 
 document.querySelector('.btn-hold').addEventListener('click',function(){
@@ -123,6 +122,7 @@ function initGame(){
     rollScore = 0;
     activePlayer = 0;
     gamePlaying = true;
+    confirmScore = true;
 
     document.querySelector('.dice').style.display = 'none';
     document.getElementById('score-0').textContent = '0';
@@ -138,6 +138,10 @@ function initGame(){
     document.querySelector('.player-0-panel').classList.remove('active');
     document.querySelector('.player-1-panel').classList.remove('active');
     document.querySelector('.player-0-panel').classList.add('active');
+
+    document.getElementById('userChosenWinningScore').innerHTML = '<input type="number" id="winningScore" value="20">';
+    // document.getElementById('chosenWinningScore').style.display = 'none'; //ptag
+
 }
 
 
@@ -150,7 +154,7 @@ function initGame(){
     //add input filed somewhere on page or use prompt asking for total score.
     // set that value to be a var. change in above code
 
-//3-Add another dice ot the game so that there ar 2. the player still loses it's current score if one of them is a 1. use css to position the second dice.
+//3-Add another dice to the game so that there are 2. the player still loses it's current score if one of them is a 1. use css to position the second dice.
     //can i change dice to be a function to call? if not, add another die using the code and position on page
 
 
